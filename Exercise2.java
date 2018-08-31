@@ -18,7 +18,7 @@ public class Exercise2{
 
     }
 
-    private void increment(){
+    private synchronized void increment(){
         counter++;
     }
 
