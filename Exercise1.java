@@ -8,9 +8,10 @@ public class Exercise1{
     }
 
     public Exercise1(){
-        Thread thread = new Thread(new HelloThread());
-        thread.start();
-        
+        for(int i = 0; i < 5; i++){
+            Thread thread = new Thread(new HelloThread());
+            thread.start();
+        }    
     }
     public static void main(String[] args) {
         new Exercise1();
