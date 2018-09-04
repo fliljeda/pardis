@@ -13,8 +13,9 @@ public class Semaphore{
     //has been made available
     public void semaSignal(){
         synchronized(lock){
+            boolean notify = value < 0;
             value += 1;
-            if(value <= 0){
+            if(notify){
                 lock.notify();
             }
         }
