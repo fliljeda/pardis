@@ -29,14 +29,19 @@ public class ProducerConsumer{
         }
 
         private void sendInt(int n) throws Exception{
+            
             while(true){
-                for(int i=0; i < isFree.length; i++){
-                    if(isFree[i]){
-                        buffer[i] = n;
-                        isFree[i] = false;
-                        return;
+                synchronized(lock){
+                    for(int i=0; i < isFree.length; i++){
+                        if(isFree[i]){
+                            buffer[i] = n;
+                            isFree[i] = false;
+                            lock.notifyAll();
+                            return;
+                        }
                     }
-                }
+                    lock.wait();
+                }   
             }
          }
 
@@ -60,12 +65,16 @@ public class ProducerConsumer{
 
         public void readBuffer() throws Exception{
             while(true){
-                for(int i = 0; i < isFree.length; i++){
-                    if(!isFree[i]){
-                        System.out.println("INT RECIEVED: " + buffer[i]);
-                        isFree[i] = true;
-                    }
+                    synchronized(lock){
+                    for(int i = 0; i < isFree.length; i++){
+                        if(!isFree[i]){
+                            System.out.println("INT RECIEVED: " + buffer[i]);
+                            isFree[i] = true;
+                            lock.notify();
+                        }   
             
+                    }
+                    lock.wait();
                 }
             }
         }
