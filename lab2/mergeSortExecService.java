@@ -58,13 +58,23 @@ public class mergeSortExecService implements Callable<ArrayList<Integer>>{
     }
 
     public static void main(String[] args) throws Exception{
-        ArrayList<Integer> l = new GenerateArrays(false).generateArray(10000);
+        int size = 0;
+        if(args.length < 1){
+            size = 10000;
+        }
+        try{
+            size = Integer.parseInt(args[0]);
+        }catch(Exception e){
+            System.out.println("Could not parse size. Using 10000 as replacement");
+            size = 10000;
+        }
+
+        ArrayList<Integer> l = new GenerateArrays(false).generateArray(size);
         mergeSortExecService m = new mergeSortExecService(l);
         //System.out.println("Unsorted: "+ l);
         //System.out.println("Sorted: " + m.call());
         m.call();
         m.exec.shutdown();
-
     }
 
    

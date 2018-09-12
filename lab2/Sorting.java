@@ -45,10 +45,21 @@ public class Sorting{
 
 
     public static void main(String[] args){
+        int size = 0;
+        if(args.length < 1){
+            size = 10000;
+        }
+        try{
+            size = Integer.parseInt(args[0]);
+        }catch(Exception e){
+            System.out.println("Could not parse size. Using 10000 as replacement");
+            size = 10000;
+        }
         GenerateArrays g = new GenerateArrays(false);
-        ArrayList<Integer> listToSort = g.generateArray(21);
-        System.out.println("Unsorted: " + listToSort);
-        System.out.println("Sorted: " + Sorting.mergeSortSeq(listToSort));
+        ArrayList<Integer> listToSort = g.generateArray(size);
+        //System.out.println("Unsorted: " + listToSort);
+        //System.out.println("Sorted: " + Sorting.mergeSortSeq(listToSort));
+        Sorting.mergeSortSeq(listToSort);
 
 
 
