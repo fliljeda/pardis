@@ -1,10 +1,13 @@
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import com.sun.javafx.image.impl.General;
 
-public class SeqSort{
+public class Sorting{
 
-    public static ArrayList<Integer> mergeSort(ArrayList<Integer> list){
+    public static ArrayList<Integer> mergeSortSeq(ArrayList<Integer> list){
         if (list.size() == 1){return list;}
         int middle = list.size()/2;
         ArrayList<Integer> firstHalf = new ArrayList<Integer>(middle+1);
@@ -15,8 +18,8 @@ public class SeqSort{
         for(int i = middle; i < list.size(); i++){
             secondHalf.add(list.get(i));
         }
-        ArrayList<Integer> firstSorted = mergeSort(firstHalf);
-        ArrayList<Integer> secondSorted = mergeSort(secondHalf);
+        ArrayList<Integer> firstSorted = mergeSortSeq(firstHalf);
+        ArrayList<Integer> secondSorted = mergeSortSeq(secondHalf);
         ArrayList retList = new ArrayList();
         
         while(firstSorted.size() > 0 && secondSorted.size() > 0){
@@ -39,11 +42,14 @@ public class SeqSort{
 
         return retList;
     }
+   
+
+
     public static void main(String[] args){
         GenerateArrays g = new GenerateArrays(false);
         ArrayList<Integer> listToSort = g.generateArray(21);
         System.out.println("Unsorted: " + listToSort);
-        System.out.println("Sorted: " + SeqSort.mergeSort(listToSort));
+        System.out.println("Sorted: " + Sorting.mergeSortSeq(listToSort));
 
 
 
