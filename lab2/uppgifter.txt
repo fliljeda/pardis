@@ -1,0 +1,25 @@
+This is a programming exercise in which you will implement one of two algorithms in four different ways.
+
+    Choose one of the following two algorithms:
+
+    (a) Mergesort (b) Quicksort
+
+    Implement a sequential version of the algorithm
+
+    Implement a parallel version using ExecutorService. See chapter 16
+
+    in H&S for details on how to use ExecutorService.
+
+    Implement a parallel version using a ForkJoinPool and RecursiveAction.
+
+    Requires a Java version 7 or later.
+
+    Implement a parallel version using the parallel streams and lambda functions that were introduced in Java 8.
+
+    Compare the four different implementations and explain your results.
+
+Background reading:
+
+    H&S section 16.1 has an introduction
+    Read section on executors from the Java Tutorial https://docs.oracle.com/javase/tutorial/essential/concurrency/executors.html 
+    Read section on aggregators from the Java Tutorial https://docs.oracle.com/javase/tutorial/collections/streams/index.html
