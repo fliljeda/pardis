@@ -20,10 +20,7 @@ public class mergeSortExecService implements Callable<Integer[]>{
     }
 
     public Integer[] call() throws Exception{
-        int start = this.start;
-        int end = this.end;
-        Integer[] returnList = this.retList;
-        Integer[] list = this.list;
+    
         int size = end - start + 1;
         if (size == 1){
            // System.out.println("START:" + start);
