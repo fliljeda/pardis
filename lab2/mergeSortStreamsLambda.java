@@ -1,47 +1,46 @@
+import java.util.concurrent.Callable;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.RecursiveAction;
+import java.util.concurrent.RecursiveTask;
 
-public class mergeSortExecService implements Callable<Integer[]>{
-    public static final int THRESHOLD = 100000;
-    static ExecutorService exec = Executors.newCachedThreadPool();
-    public Integer[] list;
-    public int start;
-    public int end;
-    public Integer[] returnList;
-    
-    public mergeSortExecService(Integer[] list, int start, int end, Integer[] returnList){
-        this.list = list;
-        this.start = start;
-        this.end = end;
-        this.returnList= returnList;
-    
+public class mergeSortStreamsLambda {
+    public static final int THRESHOLD = 100000; // What size we switch to sequential
+
+
+    public static class Bound{
+        public int start;
+        public int end;
+        public Bound(int start, int end){
+            this.start = start;
+            this.end = end;
+        }
     }
 
-    public Integer[] call() throws Exception{
-    
+    public static void mergeSort(Integer[] list, int start, int end , Integer[] returnList){
         int size = end - start + 1;
+        //System.out.println(size);
         if (size == 1){
            // System.out.println("START:" + start);
             returnList[start] = list[start];
-            return returnList;
+            return;
+        }
+        if (size < THRESHOLD){
+            Sorting.mergeSortSeq(list, start, end, returnList);
+            return;
         }
         int middle = start + (size-1)/2;
 
-        if(size < THRESHOLD){
-            Sorting.mergeSortSeq(list, start, end, returnList);
-            return returnList;
-        }
-      
+        ArrayList<Bound> bounds = new ArrayList<Bound>();
+        bounds.add(new Bound(start, middle));
+        bounds.add(new Bound(middle+1, end));
 
-        Future<Integer[]> firstSortedFuture = exec.submit(new mergeSortExecService(list, start, middle, returnList));
-        Future<Integer[]> secondSortedFuture = exec.submit(new mergeSortExecService(list, middle+1, end,returnList));
-        
-        Integer[] firstSorted = firstSortedFuture.get();
-        Integer[] secondSorted = secondSortedFuture.get();
-        
+        bounds.parallelStream().forEach(
+            b -> mergeSort(list, b.start, b.end, returnList));
+      
         int firstIndex = start;
         int sndIndex = middle+1;
         int writeIndex = start; 
@@ -72,8 +71,7 @@ public class mergeSortExecService implements Callable<Integer[]>{
         for(int i = start; i < end+1; i++){
             returnList[i] = list[i];
         }
-        return returnList;
-     
+
     }
 
     public static void main(String[] args) throws Exception{
@@ -87,23 +85,24 @@ public class mergeSortExecService implements Callable<Integer[]>{
             System.out.println("Could not parse size. Using 10000 as replacement");
             size = 10000;
         }
-
         ArrayList<Integer> l = new GenerateArrays(false).generateArray(size,GenerateArrays.Mode.REVERSE);
         //System.out.println("Unsorted: "+ l);
         Integer[] arrToSort = new Integer[l.size()];
         l.toArray(arrToSort); 
         Integer[] retArr = new Integer[l.size()];
-        mergeSortExecService m = new mergeSortExecService(arrToSort,0,l.size()-1,retArr);
-        retArr = m.call();
+
+        mergeSort(arrToSort,0,arrToSort.length-1,retArr);
         ArrayList<Integer> l2 = new ArrayList<Integer>();
         for (int i = 0; i < retArr.length; i++){
             l2.add(retArr[i]);
         }
-  
         //System.out.println("Sorted: " + l2);
-        m.call();
-        m.exec.shutdown();
-    }
+        
+        //System.out.println("NOT SORTED: " + l);
 
-   
-} 
+        //System.out.println("Unsorted: "+ l);
+        //System.out.println("Sorted: " + m.call());
+        
+
+    }
+}
