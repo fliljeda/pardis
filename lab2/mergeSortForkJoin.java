@@ -7,59 +7,74 @@ import java.util.concurrent.Future;
 import java.util.concurrent.RecursiveAction;
 import java.util.concurrent.RecursiveTask;
 
-public class mergeSortForkJoin extends RecursiveTask<ArrayList<Integer>>{
+public class mergeSortForkJoin extends RecursiveAction{
+    public static final int THRESHOLD = 100000; // What size we switch to sequential
     static ForkJoinPool pool = new ForkJoinPool();
-    public ArrayList<Integer> list;
-    
-    public mergeSortForkJoin(ArrayList<Integer> list){
+    public Integer[] list;
+    public int start;
+    public int end;
+    public Integer[] returnList;
+
+    public mergeSortForkJoin(Integer[] list, int start, int end , Integer[] returnList){
         this.list = list;
+        this.start = start;
+        this.end = end;
+        this.returnList = returnList;
     
     }
     @Override
-    public ArrayList<Integer> compute(){
-        
-        if (list.size() == 1){return list;}
-    
-        int middle = list.size()/2;
-        ArrayList<Integer> firstHalf = new ArrayList<Integer>(middle+1);
-        ArrayList<Integer> secondHalf = new ArrayList<Integer>(middle+1);
-    
-        for (int i = 0; i < middle; i++ ){
-            firstHalf.add(list.get(i));
+    public void compute(){
+        int size = end - start + 1;
+        //System.out.println(size);
+        if (size == 1){
+           // System.out.println("START:" + start);
+            returnList[start] = list[start];
+            return;
         }
-    
-        for(int i = middle; i < list.size(); i++){
-            secondHalf.add(list.get(i));
+        if (size < THRESHOLD){
+            Sorting.mergeSortSeq(list, start, end, returnList);
+            return;
         }
-
-        mergeSortForkJoin first = new mergeSortForkJoin(firstHalf);
-        mergeSortForkJoin second = new mergeSortForkJoin(secondHalf);
+        int middle = start + (size-1)/2;
+      
+        mergeSortForkJoin first = new mergeSortForkJoin(list, start, middle, returnList);
+        mergeSortForkJoin second = new mergeSortForkJoin(list, middle+1, end, returnList);
         pool.execute(first);
         pool.execute(second);
-        ArrayList<Integer> firstSorted = first.join();
-        ArrayList<Integer> secondSorted = second.join();
-
-    
-        ArrayList retList = new ArrayList();    
-        while(firstSorted.size() > 0 && secondSorted.size() > 0){
-            if (firstSorted.get(0) > secondSorted.get(0)){
-                retList.add(secondSorted.get(0));
-                secondSorted.remove(0);
+        first.join();
+        second.join();
+        
+        int firstIndex = start;
+        int sndIndex = middle+1;
+        int writeIndex = start; 
+        
+        while(firstIndex != middle+1 && sndIndex !=end+1){
+            if (returnList[firstIndex] > returnList[sndIndex]){
+                list[writeIndex] = returnList[sndIndex];
+                sndIndex++;
+                writeIndex++;
             }
             else{
-                retList.add(firstSorted.get(0));
-                firstSorted.remove(0);
+                list[writeIndex] = returnList[firstIndex];
+                firstIndex++;
+                writeIndex++;
             }
         }
 
-        for(Integer v : firstSorted){
-            retList.add(v);
+        for(int i = firstIndex; i < middle+1; i++){
+            list[writeIndex] = returnList[firstIndex];
+            writeIndex++;
+            firstIndex++;
         }
-        for(Integer v : secondSorted){
-            retList.add(v);
+        for(int i = sndIndex; i < end+1; i++){
+            list[writeIndex] = returnList[sndIndex];
+            writeIndex++;
+            sndIndex++;
+        }
+        for(int i = start; i < end+1; i++){
+            returnList[i] = list[i];
         }
 
-        return retList;
     }
 
     public static void main(String[] args) throws Exception{
@@ -73,11 +88,23 @@ public class mergeSortForkJoin extends RecursiveTask<ArrayList<Integer>>{
             System.out.println("Could not parse size. Using 10000 as replacement");
             size = 10000;
         }
+        ArrayList<Integer> l = new GenerateArrays(false).generateArray(size,GenerateArrays.Mode.REVERSE);
+        //System.out.println("Unsorted: "+ l);
+        Integer[] arrToSort = new Integer[l.size()];
+        l.toArray(arrToSort); 
+        Integer[] retArr = new Integer[l.size()];
+        mergeSortForkJoin m = new mergeSortForkJoin(arrToSort,0,arrToSort.length-1,retArr);
+        pool.invoke(m);
+        ArrayList<Integer> l2 = new ArrayList<Integer>();
+        for (int i = 0; i < retArr.length; i++){
+            l2.add(retArr[i]);
+        }
+       // System.out.println("Sorted: " + l2);
+        
 
-        ArrayList<Integer> l = new GenerateArrays(false).generateArray(size);
-        mergeSortForkJoin m = new mergeSortForkJoin(l);
+       
         //System.out.println("NOT SORTED: " + l);
-        System.out.println("SORTED: " + pool.invoke(m));
+
         //System.out.println("Unsorted: "+ l);
         //System.out.println("Sorted: " + m.call());
         

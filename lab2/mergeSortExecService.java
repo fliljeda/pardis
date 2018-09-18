@@ -9,13 +9,13 @@ public class mergeSortExecService implements Callable<Integer[]>{
     public Integer[] list;
     public int start;
     public int end;
-    public Integer[] retList;
+    public Integer[] returnList;
     
-    public mergeSortExecService(Integer[] list, int start, int end, Integer[] retList){
+    public mergeSortExecService(Integer[] list, int start, int end, Integer[] returnList){
         this.list = list;
         this.start = start;
         this.end = end;
-        this.retList= retList;
+        this.returnList= returnList;
     
     }
 
