@@ -1,0 +1,60 @@
+Sequential 1000
+real	0m0,067s
+user	0m0,058s
+sys	0m0,022s
+
+Sequential 100000
+real	0m0,141s
+user	0m0,206s
+sys	0m0,016s
+
+Sequential 4000000
+real	0m3,911s
+user	0m10,622s
+sys	0m0,105s
+
+ExecutorService 1000
+real	0m0,068s
+user	0m0,067s
+sys	0m0,018s
+
+ExecutorService 100000
+real	0m0,256s
+user	0m0,567s
+sys	0m0,012s
+
+ExecutorService 4000000
+real	0m4,323s
+user	0m15,880s
+sys	0m0,240s
+
+ForkJoinPool 1000
+real	0m0,081s
+user	0m0,063s
+sys	0m0,022s
+
+ForkJoinPool 100000
+real	0m0,173s
+user	0m0,315s
+sys	0m0,020s
+
+ForkJoinPool 4000000
+real	0m3,187s
+user	0m11,199s
+sys	0m0,215s
+
+Parallelstream and Lambda 1000
+real	0m0,075s
+user	0m0,066s
+sys	0m0,015s
+
+Parallelstream and Lambda 100000
+real	0m0,216s
+user	0m0,411s
+sys	0m0,028s
+
+Parallelstream and Lambda 4000000
+real	0m2,916s
+user	0m10,430s
+sys	0m0,149s
+
