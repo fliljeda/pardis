@@ -22,15 +22,16 @@ grabFork(index,owner) == forks' = [forks EXCEPT ![index] = owner] (*  *)
 releaseForks(phil) == /\ forks' = [forks EXCEPT ![LeftFork(phil)] = Free, 
                                                 ![RightFork(phil)] = Free]
 
-checkFairray(phil) == \E x \in 0..4: fairray[x] >= fairray[phil] 
+checkFairray(phil) == ~\E x \in 0..4: fairray[x] < fairray[phil] 
 
+fairrayFilled == \A x \in 0..4: fairray[x] = 1
 
 thinking(phil) ==  /\ philosophers[phil] = "thinking"
                    /\ forkFree(LeftFork(phil)) 
                    /\ grabFork(LeftFork(phil),phil)
                    /\ philosophers' = [philosophers EXCEPT ![phil] = "grabbing"]
                    /\ checkFairray(phil)
-                   /\ fairray' = fairray
+                   /\ IF fairrayFilled THEN fairray' = [i \in 0..4 |-> 0] ELSE fairray' = fairray
 
 
 grabbing(phil) ==  /\ philosophers[phil] = "grabbing"
