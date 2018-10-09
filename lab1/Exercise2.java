@@ -32,7 +32,7 @@ public class Exercise2{
 
         try{
             for(int i = 0; i < threads.length; i++){
-                threads[i].join();
+                threads[i].join(); //Wait for both threads to finsish
             }
         }catch(Exception e){
         }

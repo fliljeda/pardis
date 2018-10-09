@@ -17,7 +17,7 @@ This is a programming exercise in which you will implement one of two algorithms
     Implement a parallel version using the parallel streams and lambda functions that were introduced in Java 8.
 
     Compare the four different implementations and explain your results.
-
+    
 Background reading:
 
     H&S section 16.1 has an introduction
