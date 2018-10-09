@@ -2,18 +2,18 @@
 EXTENDS diningphil, TLC
 
 \* CONSTANT definitions @modelParameterConstants:0Free
-const_153908315675662000 == 
+const_1539099732567102000 == 
 -1
 ----
 
-\* INIT definition @modelBehaviorInit:0
-init_153908315675663000 ==
-Init
+\* SPECIFICATION definition @modelBehaviorSpec:0
+spec_1539099732567103000 ==
+Spec
 ----
-\* NEXT definition @modelBehaviorNext:0
-next_153908315675664000 ==
-Next
+\* PROPERTY definition @modelCorrectnessProperties:0
+prop_1539099732567104000 ==
+\A i \in 0..4: philosophers[i] = "grabbing" ~> philosophers[i] = "eating"
 ----
 =============================================================================
 \* Modification History
-\* Created Tue Oct 09 13:05:56 CEST 2018 by fredrik
+\* Created Tue Oct 09 17:42:12 CEST 2018 by fredrik

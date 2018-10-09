@@ -2,7 +2,7 @@
 TLC2 Version 2.13 of 18 July 2018
 @!@!@ENDMSG 2262 @!@!@
 @!@!@STARTMSG 2187:0 @!@!@
-Running breadth-first search Model-Checking with seed -4037099690590997320 with 2 workers on 4 cores with 434MB heap and 973MB offheap memory (Linux 4.15.0-36-generic amd64, Oracle Corporation 1.8.0_181 x86_64).
+Running breadth-first search Model-Checking with seed 487634575349008187 with 2 workers on 4 cores with 434MB heap and 973MB offheap memory (Linux 4.15.0-36-generic amd64, Oracle Corporation 1.8.0_181 x86_64).
 @!@!@ENDMSG 2187 @!@!@
 @!@!@STARTMSG 2220:0 @!@!@
 Starting SANY...
@@ -25,54 +25,32 @@ Semantic processing of module MC
 SANY finished.
 @!@!@ENDMSG 2219 @!@!@
 @!@!@STARTMSG 2185:0 @!@!@
-Starting... (2018-10-09 13:05:57)
+Starting... (2018-10-09 17:42:13)
 @!@!@ENDMSG 2185 @!@!@
+@!@!@STARTMSG 2212:0 @!@!@
+Implied-temporal checking--satisfiability problem has 5 branches.
+@!@!@ENDMSG 2212 @!@!@
 @!@!@STARTMSG 2189:0 @!@!@
 Computing initial states...
 @!@!@ENDMSG 2189 @!@!@
 @!@!@STARTMSG 2190:0 @!@!@
 Finished computing initial states: 1 distinct state generated.
 @!@!@ENDMSG 2190 @!@!@
-@!@!@STARTMSG 2193:0 @!@!@
-Model checking completed. No error has been found.
-  Estimates of the probability that TLC did not check all reachable states
-  because two distinct states had the same fingerprint:
-  calculated (optimistic):  val = 5.7E-16
-  based on the actual fingerprints:  val = 2.0E-16
-@!@!@ENDMSG 2193 @!@!@
-@!@!@STARTMSG 2201:0 @!@!@
-The coverage statistics at 2018-10-09 13:06:02
-@!@!@ENDMSG 2201 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 17, col 26 to line 17, col 65 of module diningphil: 163
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 18, col 26 to line 19, col 74 of module diningphil: 56
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 27, col 23 to line 27, col 80 of module diningphil: 107
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 32, col 23 to line 32, col 78 of module diningphil: 56
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 36, col 23 to line 36, col 80 of module diningphil: 56
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2202:0 @!@!@
-End of statistics.
-@!@!@ENDMSG 2202 @!@!@
+@!@!@STARTMSG 2192:0 @!@!@
+Checking 5 branches of temporal properties for the current state space with 32835 total distinct states at (2018-10-09 17:42:16)
+@!@!@ENDMSG 2192 @!@!@
+@!@!@STARTMSG 2267:0 @!@!@
+Finished checking temporal properties in 00s at 2018-10-09 17:42:17
+@!@!@ENDMSG 2267 @!@!@
 @!@!@STARTMSG 2200:0 @!@!@
-Progress(6) at 2018-10-09 13:06:02: 220 states generated (2,645 s/min), 70 distinct states found (841 ds/min), 0 states left on queue.
+Progress(16) at 2018-10-09 17:42:17: 55217 states generated (55,217 s/min), 6606 distinct states found (6,606 ds/min), 1603 states left on queue.
 @!@!@ENDMSG 2200 @!@!@
-@!@!@STARTMSG 2199:0 @!@!@
-220 states generated, 70 distinct states found, 0 states left on queue.
-@!@!@ENDMSG 2199 @!@!@
-@!@!@STARTMSG 2194:0 @!@!@
-The depth of the complete state graph search is 6.
-@!@!@ENDMSG 2194 @!@!@
-@!@!@STARTMSG 2268:0 @!@!@
-The average outdegree of the complete state graph is 1 (minimum is 0, the maximum 5 and the 95th percentile is 3).
-@!@!@ENDMSG 2268 @!@!@
-@!@!@STARTMSG 2186:0 @!@!@
-Finished in 5494ms at (2018-10-09 13:06:02)
-@!@!@ENDMSG 2186 @!@!@
+@!@!@STARTMSG 2192:0 @!@!@
+Checking 5 branches of temporal properties for the current state space with 2056415 total distinct states at (2018-10-09 17:43:17)
+@!@!@ENDMSG 2192 @!@!@
+@!@!@STARTMSG 2267:0 @!@!@
+Finished checking temporal properties in 30s at 2018-10-09 17:43:47
+@!@!@ENDMSG 2267 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(41) at 2018-10-09 17:43:47: 3340530 states generated (3,285,313 s/min), 411283 distinct states found (404,677 ds/min), 45886 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
